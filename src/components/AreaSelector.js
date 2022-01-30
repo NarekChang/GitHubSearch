@@ -9,13 +9,13 @@ import {
 
 import MainContext from "../hooks/MainContext";
 
-export default function ModeSelector({ value = "" }) {
-  const { loading, query, mode, setMode, getItems } = useContext(MainContext);
+export default function AreaSelector({ value = "" }) {
+  const { loading, query, area, setArea, getItems } = useContext(MainContext);
   const [animatedValue] = useState(new Animated.Value(0));
 
   const onToggle = () => {
-    setMode(value);
-    if (query) getItems({ mode: value });
+    setArea(value);
+    if (query) getItems({ area: value });
   };
 
   const animStart = () => {
@@ -41,8 +41,8 @@ export default function ModeSelector({ value = "" }) {
     outputRange: [1, 0.9]
   });
 
-  const color = value === mode ? "#fff" : "#000";
-  const backgroundColor = value === mode ? "purple" : "transparent";
+  const color = value === area ? "#fff" : "#000";
+  const backgroundColor = value === area ? "purple" : "transparent";
 
   return (
     <Animated.View style={{ transform: [{ scale }] }}>

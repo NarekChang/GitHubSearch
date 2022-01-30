@@ -9,24 +9,24 @@ import {
 } from "react-native";
 import { InAppBrowser } from "react-native-inappbrowser-reborn";
 
-import { MODES } from "../vars";
+import { AREAS } from "../vars";
 import Pagination from "./Pagination";
 import MainContext from "../hooks/MainContext";
 import ListEmptyComponent from "./ListEmptyComponent";
 
 export default function List() {
-  const { items, mode } = useContext(MainContext);
+  const { items, area } = useContext(MainContext);
 
   const getItemName = ({ login = "", title = "", full_name = "", id = "" }) => {
-    if (mode === MODES[0]) return login;
-    if (mode === MODES[1]) return title;
+    if (area === AREAS[0]) return login;
+    if (area === AREAS[1]) return title;
 
     return full_name || id;
   };
 
   const getItemUri = ({ avatar_url = "", owner = {}, user = {} }) => {
-    if (mode === MODES[0]) return avatar_url;
-    if (mode === MODES[1]) return user.avatar_url || "";
+    if (area === AREAS[0]) return avatar_url;
+    if (area === AREAS[1]) return user.avatar_url || "";
 
     return owner.avatar_url || "";
   };

@@ -6,10 +6,10 @@ const EmptyResult = {
   total_count: 0
 };
 
-export const searchRequest = async (mode = "users", query = "", page = 1) => {
+export const searchRequest = async (area = "users", query = "", page = 1) => {
   try {
     const res = await axios.get(
-      `${searchUrl}/${mode}?q=${query}&${sort}&page=${page}&per_page=${PER_PAGE}`
+      `${searchUrl}/${area}?q=${query}&${sort}&page=${page}&per_page=${PER_PAGE}`
     );
 
     const { data = {} } = res;

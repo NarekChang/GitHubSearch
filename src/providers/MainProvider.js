@@ -1,37 +1,42 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
-import { MODES } from "../vars";
+import { AREAS } from "../vars";
 import { searchRequest } from "../api";
 import MainContext from "../hooks/MainContext";
 
 export default function MainProvider({ children }) {
   const [page, setPage] = useState(1);
-  const [mode, setMode] = useState(MODES[0]);
+  const [area, setArea] = useState(AREAS[0]);
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
+  const seqSef = useRef(0);
+
   const getItems = async (newConfig = {}) => {
     setItems([]);
     setLoading(true);
 
-    // сбрасывает номер страницы, если он не был задан в аргументе
+    // reset value of "page" if it is not set
     const config = {
       page: 1,
-      mode,
+      area,
       query,
       ...newConfig
     };
 
-    const { page: nPage, mode: nMode, query: nQuery } = config;
+    const { page: nPage, area: nArea, query: nQuery } = config;
 
-    const res = await searchRequest(nMode, nQuery, nPage);
+    let expectedSef = seqSef.current;
+
+    const res = await searchRequest(nArea, nQuery, nPage);
     const { total_count = 0, items = [] } = res;
 
-    // здесь нужно сделать проверку на совпадение параметров(query, page, mode) при отправке запроса
-    // с актуальными параметрами на момент получения ответа на запрос
-    // если параметры не совпадают, то новый список не записываем
+    // check relevance of request
+    if (expectedSef !== seqSef.current) return;
+
+    seqSef.current++;
 
     setPage(nPage);
     setItems(items);
@@ -40,8 +45,8 @@ export default function MainProvider({ children }) {
   };
 
   const state = {
-    mode,
-    setMode,
+    area,
+    setArea,
     page,
     setPage,
     query,

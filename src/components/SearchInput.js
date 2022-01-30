@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 
-import { MODES } from "../vars";
-import ModeSelector from "./ModeSelector";
+import { AREAS } from "../vars";
+import AreaSelector from "./AreaSelector";
 import MainContext from "../hooks/MainContext";
 
 const TYPING_DURATION = 300;
@@ -13,13 +13,9 @@ export default function SearchInput() {
   const [typingTimeout, setTypingTimeout] = useState(0);
 
   const renderCheckbox = (item = "") => (
-    <ModeSelector key={item} value={item} />
+    <AreaSelector key={item} value={item} />
   );
 
-  // Отправляем запрос только, когда с последнего нажатия
-  // клавиши прошло больше TYPING_DURATION миллисекунд
-  // Так мы поймем, что пользователь перестал убрал руки
-  // от клавиатуры
   const sendRequest = (query) => () => getItems({ query });
 
   const changeQuery = (nQuery) => {
@@ -27,8 +23,15 @@ export default function SearchInput() {
 
     setQuery(nQuery);
 
+    // Timeout for text typing
     setTypingTimeout(setTimeout(sendRequest(nQuery), TYPING_DURATION));
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(typingTimeout);
+    };
+  }, []);
 
   return (
     <View style={s.main}>
@@ -39,7 +42,7 @@ export default function SearchInput() {
         onChangeText={changeQuery}
       />
 
-      <View style={s.modesWrap}>{MODES.map(renderCheckbox)}</View>
+      <View style={s.areasWrap}>{AREAS.map(renderCheckbox)}</View>
     </View>
   );
 }
@@ -51,7 +54,7 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "grey"
   },
-  modesWrap: {
+  areasWrap: {
     marginLeft: -6,
     flexDirection: "row",
     justifyContent: "flex-start"
