@@ -6,7 +6,7 @@ import MainProvider from "./providers/MainProvider";
 
 const App = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <MainProvider>
         <MainScrn />
       </MainProvider>

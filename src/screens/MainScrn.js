@@ -14,5 +14,9 @@ export default function MainScrn() {
 }
 
 const s = StyleSheet.create({
-  main: {}
+  main: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between"
+  }
 });

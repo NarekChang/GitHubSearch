@@ -10,13 +10,13 @@ import {
 import MainContext from "../hooks/MainContext";
 
 export default function ModeSelector({ value = "" }) {
-  const { mode, setMode, getItems } = useContext(MainContext);
+  const { query, mode, setMode, getItems } = useContext(MainContext);
   const [animatedValue] = useState(new Animated.Value(0));
 
   const onToggle = () => {
     setMode(value);
 
-    getItems();
+    if (query) getItems({ mode: value });
   };
 
   const animStart = () => {

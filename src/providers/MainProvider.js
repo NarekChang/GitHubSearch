@@ -20,7 +20,6 @@ export default function MainProvider({ children }) {
     };
 
     const { page: nPage, mode: nMode, query: nQuery } = config;
-
     
     const res = await searchRequest(nMode, nQuery, nPage);
 

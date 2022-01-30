@@ -11,7 +11,7 @@ export const searchRequest = async (mode = "users", query = "", page = 1) => {
     const res = await axios.get(
       `${searchUrl}/${mode}?q=${query}&${sort}&page=${page}`
     );
-
+    
     const { data = {} } = res;
     const { total_count = 0, items = [] } = data;
 
