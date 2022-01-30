@@ -31,22 +31,15 @@ export default function List() {
     return owner.avatar_url || "";
   };
 
-  const getItemLink = ({ url = "", html_url = "" }) => {
-    if (mode === MODES[0]) return url;
-    if (mode === MODES[1]) return html_url;
-
-    return html_url;
-  };
-
   const openLink = (url) => async () => {
     if (await InAppBrowser.isAvailable()) await InAppBrowser.open(url);
     else Linking.openURL(url);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item = {} }) => {
     const name = getItemName(item);
     const uri = getItemUri(item);
-    const link = getItemLink(item);
+    const link = item.html_url || "";
 
     return (
       <TouchableOpacity

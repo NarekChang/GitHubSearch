@@ -6,4 +6,4 @@ export const sort = "sort=created&order=asc";
 
 export const MODES = ["users", "issues", "repositories"];
 
-export const PER_PAGE = 30;
+export const PER_PAGE = 20;

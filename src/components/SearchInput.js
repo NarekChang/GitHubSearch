@@ -47,7 +47,7 @@ export default function SearchInput() {
 const s = StyleSheet.create({
   main: {
     paddingHorizontal: 12,
-    paddingTop: 40,
+    paddingTop: 20,
     borderBottomWidth: 1,
     borderBottomColor: "grey"
   },
@@ -60,6 +60,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 6,
     height: 42,
     borderWidth: 1,
+    borderRadius: 4,
     borderColor: "grey"
   }
 });

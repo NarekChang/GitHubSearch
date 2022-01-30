@@ -42,7 +42,7 @@ export default function ModeSelector({ value = "" }) {
   });
 
   const color = value === mode ? "#fff" : "#000";
-  const backgroundColor = value === mode ? "pink" : "transparent";
+  const backgroundColor = value === mode ? "purple" : "transparent";
 
   return (
     <Animated.View style={{ transform: [{ scale }] }}>
