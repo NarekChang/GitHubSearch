@@ -9,26 +9,29 @@ export default function MainProvider({ children }) {
   const [mode, setMode] = useState(MODES[0]);
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
   const getItems = async (newConfig = {}) => {
     setItems([]);
+    setLoading(true);
 
     const config = {
-      page,
+      page: 1,
       mode,
       query,
       ...newConfig
     };
 
     const { page: nPage, mode: nMode, query: nQuery } = config;
-    
-    const res = await searchRequest(nMode, nQuery, nPage);
 
+    const res = await searchRequest(nMode, nQuery, nPage);
     const { total_count = 0, items = [] } = res;
 
+    setPage(nPage);
     setItems(items);
     setTotalCount(total_count);
+    setLoading(false);
   };
 
   const state = {
@@ -42,7 +45,9 @@ export default function MainProvider({ children }) {
     setItems,
     totalCount,
     setTotalCount,
-    getItems
+    getItems,
+    loading,
+    setLoading
   };
 
   return <MainContext.Provider value={state}>{children}</MainContext.Provider>;

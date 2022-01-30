@@ -10,12 +10,11 @@ import {
 import MainContext from "../hooks/MainContext";
 
 export default function ModeSelector({ value = "" }) {
-  const { query, mode, setMode, getItems } = useContext(MainContext);
+  const { loading, query, mode, setMode, getItems } = useContext(MainContext);
   const [animatedValue] = useState(new Animated.Value(0));
 
   const onToggle = () => {
     setMode(value);
-
     if (query) getItems({ mode: value });
   };
 
@@ -52,6 +51,7 @@ export default function ModeSelector({ value = "" }) {
         onPressIn={animStart}
         onPressOut={animEnd}
         activeOpacity={1}
+        disabled={loading}
         style={[s.wrap, { backgroundColor }]}
       >
         <Text style={[s.label, { color }]}>{value.toUpperCase()}</Text>

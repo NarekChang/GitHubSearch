@@ -2,6 +2,8 @@ import { createContext } from "react";
 import { MODES } from "../vars";
 
 export default createContext({
+  loading: false,
+  setLoading: (newVal) => {},
   query: 1,
   setQuery: (query) => {},
   mode: MODES[0],

@@ -5,7 +5,7 @@ import MainContext from "../hooks/MainContext";
 import { PER_PAGE } from "../vars";
 
 export default function Pagination() {
-  const { items, totalCount, page, setPage, getItems } =
+  const { loading, items, totalCount, page, setPage, getItems } =
     useContext(MainContext);
 
   if (items.length === 0) return null;
@@ -32,7 +32,12 @@ export default function Pagination() {
 
   return (
     <View style={s.wrap}>
-      <TouchableOpacity style={s.pageBtn} activeOpacity={1} onPress={prevPage}>
+      <TouchableOpacity
+        style={s.pageBtn}
+        activeOpacity={1}
+        onPress={prevPage}
+        disabled={loading}
+      >
         <Text style={s.pageBtnText}>{"<"}</Text>
       </TouchableOpacity>
 
@@ -40,7 +45,12 @@ export default function Pagination() {
         {page}/{getPageCount()}
       </Text>
 
-      <TouchableOpacity style={s.pageBtn} activeOpacity={1} onPress={nextPage}>
+      <TouchableOpacity
+        style={s.pageBtn}
+        activeOpacity={1}
+        onPress={nextPage}
+        disabled={loading}
+      >
         <Text style={s.pageBtnText}>{">"}</Text>
       </TouchableOpacity>
     </View>
