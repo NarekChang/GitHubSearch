@@ -5,7 +5,7 @@ import { MODES } from "../vars";
 import ModeSelector from "./ModeSelector";
 import MainContext from "../hooks/MainContext";
 
-const TYPING_DURATION = 500;
+const TYPING_DURATION = 300;
 
 export default function SearchInput() {
   const { getItems, query, setQuery } = useContext(MainContext);

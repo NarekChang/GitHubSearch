@@ -12,6 +12,8 @@ export default function MainProvider({ children }) {
   const [totalCount, setTotalCount] = useState(0);
 
   const getItems = async (newConfig = {}) => {
+    setItems([]);
+
     const config = {
       page,
       mode,

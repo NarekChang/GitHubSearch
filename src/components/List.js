@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text, Image, VirtualizedList } from "react-native";
+import { View, StyleSheet, Text, Image, FlatList } from "react-native";
 
-import MainContext from "../hooks/MainContext";
 import { MODES } from "../vars";
+import Pagination from "./Pagination";
+import MainContext from "../hooks/MainContext";
+import ListEmptyComponent from "./ListEmptyComponent";
 
 export default function List() {
   const { items, mode } = useContext(MainContext);
@@ -37,19 +39,17 @@ export default function List() {
   };
 
   return (
-    <VirtualizedList
-      style={s.wrap}
+    <FlatList
       vertical
       data={items}
       windowSize={1}
-      snapToInterval={60}
-      decelerationRate="fast"
-      snapToAlignment="start"
+      style={s.wrap}
       renderItem={renderItem}
-      getItemCount={(data) => data.length}
-      getItem={(data, index) => data[index]}
       keyExtractor={({ id }) => `ListItem${id}`}
       showsVerticalScrollIndicator={false}
+      ListHeaderComponent={Pagination}
+      ListFooterComponent={Pagination}
+      ListEmptyComponent={ListEmptyComponent}
     />
   );
 }
