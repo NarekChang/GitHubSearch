@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 
 import { MODES } from "../vars";
 import ModeSelector from "./ModeSelector";
@@ -8,7 +8,7 @@ import MainContext from "../hooks/MainContext";
 const TYPING_DURATION = 300;
 
 export default function SearchInput() {
-  const { page, setPage, getItems, query, setQuery } = useContext(MainContext);
+  const { getItems, query, setQuery } = useContext(MainContext);
 
   const [typingTimeout, setTypingTimeout] = useState(0);
 
@@ -16,6 +16,10 @@ export default function SearchInput() {
     <ModeSelector key={item} value={item} />
   );
 
+  // Отправляем запрос только, когда с последнего нажатия
+  // клавиши прошло больше TYPING_DURATION миллисекунд
+  // Так мы поймем, что пользователь перестал убрал руки
+  // от клавиатуры
   const sendRequest = (query) => () => getItems({ query });
 
   const changeQuery = (nQuery) => {

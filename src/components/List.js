@@ -1,5 +1,13 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Linking
+} from "react-native";
+import { InAppBrowser } from "react-native-inappbrowser-reborn";
 
 import { MODES } from "../vars";
 import Pagination from "./Pagination";
@@ -23,18 +31,36 @@ export default function List() {
     return owner.avatar_url || "";
   };
 
+  const getItemLink = ({ url = "", html_url = "" }) => {
+    if (mode === MODES[0]) return url;
+    if (mode === MODES[1]) return html_url;
+
+    return html_url;
+  };
+
+  const openLink = (url) => async () => {
+    if (await InAppBrowser.isAvailable()) await InAppBrowser.open(url);
+    else Linking.openURL(url);
+  };
+
   const renderItem = ({ item }) => {
     const name = getItemName(item);
     const uri = getItemUri(item);
+    const link = getItemLink(item);
 
     return (
-      <View key={item.id} style={s.itemWrap}>
+      <TouchableOpacity
+        key={item.id}
+        style={s.itemWrap}
+        onPress={openLink(link)}
+        activeOpacity={1}
+      >
         {!!uri && <Image source={{ uri }} style={s.itemAvatar} />}
 
         <Text style={s.itemText} numberOfLines={1}>
           {name}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

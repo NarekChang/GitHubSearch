@@ -16,6 +16,7 @@ export default function MainProvider({ children }) {
     setItems([]);
     setLoading(true);
 
+    // сбрасывает номер страницы, если он не был задан в аргументе
     const config = {
       page: 1,
       mode,
@@ -27,6 +28,10 @@ export default function MainProvider({ children }) {
 
     const res = await searchRequest(nMode, nQuery, nPage);
     const { total_count = 0, items = [] } = res;
+
+    // здесь нужно сделать проверку на совпадение параметров(query, page, mode) при отправке запроса
+    // с актуальными параметрами на момент получения ответа на запрос
+    // если параметры не совпадают, то новый список не записываем
 
     setPage(nPage);
     setItems(items);
