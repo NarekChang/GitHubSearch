@@ -17,11 +17,11 @@ import ListEmptyComponent from "./ListEmptyComponent";
 export default function List() {
   const { items, area } = useContext(MainContext);
 
-  const getItemName = ({ login = "", title = "", full_name = "", id = "" }) => {
+  const getItemName = ({ login = "", title = "", full_name = "" }) => {
     if (area === AREAS[0]) return login;
     if (area === AREAS[1]) return title;
 
-    return full_name || id;
+    return full_name;
   };
 
   const getItemUri = ({ avatar_url = "", owner = {}, user = {} }) => {
